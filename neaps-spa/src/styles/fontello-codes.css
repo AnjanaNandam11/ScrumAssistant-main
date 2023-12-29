@@ -1,0 +1,7 @@
+
+.icon-floppy:before { content: '\e800'; } /* '' */
+.icon-minus-circled:before { content: '\e801'; } /* '' */
+.icon-download:before { content: '\e802'; } /* '' */
+.icon-spin1:before { content: '\e830'; -webkit-animation: spin 2s 3 linear;
+  animation: spin 2s 3 linear; } /* '' */
+.icon-plus-squared:before { content: '\f0fe'; } /* '' */

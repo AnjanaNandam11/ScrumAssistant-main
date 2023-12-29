@@ -1,0 +1,44 @@
+matrix:
+  include:
+    - language: python
+      python: 3.6
+      env:
+        - FLASK_APP=autoapp.py
+        - FLASK_CONFIG=dev.cfg
+        - FLASK_DEBUG=0
+        - PORT=8081
+      addons:
+        sauce_connect:
+          no_ssl_bump_domains: localhost
+      before_install:
+        - source $HOME/.nvm/nvm.sh
+        - nvm install stable
+        - nvm use stable
+        - cd neaps-api/
+        - echo "@@@ Installing API requirements @@@"
+        - pip install -r requirements.txt
+        - flask run >/dev/null 2>&1 &
+        - cd ../neaps-spa/
+      install:
+        - echo "@@@ Installing SPA requirements @@@"
+        - npm install
+      script:
+        - echo "@@@ Launching SPA tests @@@"
+        - npm run unit
+        - npm run travisci
+    
+    - language: python
+      python: 3.6
+      env:
+        - FLASK_APP=autoapp.py
+        - FLASK_CONFIG=dev.cfg
+        - FLASK_DEBUG=1
+      before_install:
+        - cd neaps-api/
+      install:
+        - echo "@@@ Installing API requirements @@@"
+        - pip install -r requirements.txt
+        - pip install nose
+      script:
+        - echo "@@@ Running API tests @@@"
+        - nosetests
